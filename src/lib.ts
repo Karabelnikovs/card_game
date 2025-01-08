@@ -1,3 +1,5 @@
+// Modified Shithead game rules script with updated burning and resetting rules
+
 export enum Suite {
   Spades,
   Diamonds,
@@ -85,11 +87,48 @@ export function createDeck(): Deck {
 export function isPileBurnable(pile: Readonly<Pile>): boolean {
   const topCard = pile.at(-1);
   if (topCard === undefined) return false;
+
   const isTopCard10 = getRank(topCard) === Rank.Num10;
   const areTop4CardsSameRank =
     pile.length >= 4 &&
     pile.slice(-4).every((card) => getRank(card) === getRank(topCard));
+
   return isTopCard10 || areTop4CardsSameRank;
+}
+export function playCard(
+  card: Readonly<Card>,
+  pile: Pile,
+  player: Player
+): [Pile, boolean] {
+  pile.push(card);
+
+  const rank = getRank(card);
+
+  if (isPileBurnable(pile)) {
+    pile.length = 0; 
+    return [pile, rank === Rank.Num10 || pile.length === 0];
+  }
+
+  if (rank === Rank.Num10) {
+    return [pile, true];
+  }
+
+  return [pile, false];
+}
+
+export function getBurnEffect(pile: Readonly<Pile>): "reset" | "burn" | null {
+  const topCard = pile.at(-1);
+  if (topCard === undefined) return null;
+
+  const isUnique6 = getRank(topCard) === Rank.Num6;
+  const isUnique10 = getRank(topCard) === Rank.Num10;
+  const areTop4CardsSameRank =
+    pile.length >= 4 &&
+    pile.slice(-4).every((card) => getRank(card) === getRank(topCard));
+
+  if (isUnique6) return "reset";
+  if (isUnique10 || areTop4CardsSameRank) return "burn";
+  return null;
 }
 
 export type OffHandCards = [Card?, Card?, Card?];
@@ -180,16 +219,29 @@ export function dealCardsFor(
 function topCard(pile: Readonly<Pile>): Card | undefined {
   const top = pile.at(-1);
   if (top === undefined) return;
-  if (getRank(top) === Rank.Num8) return topCard(pile.slice(0, -1));
+  // if (getRank(top) === Rank.Num8) return topCard(pile.slice(0, -1));
   return top;
 }
 
+// export function canPlay(card: Readonly<Card>, pile: Readonly<Pile>): boolean {
+//   if ([Rank.Num2, Rank.Num8].includes(getRank(card))) return true;
+//   const top = topCard(pile);
+//   if (top === undefined) return true;
+//   if (getRank(top) === Rank.Num7) return getRank(card) <= getRank(top);
+//   return getRank(card) >= getRank(top);
+// }
 export function canPlay(card: Readonly<Card>, pile: Readonly<Pile>): boolean {
-  if ([Rank.Num2, Rank.Num8].includes(getRank(card))) return true;
+  const rank = getRank(card);
+
+  if (rank === Rank.Num6 || rank === Rank.Num10) {
+    return true;
+  }
+
   const top = topCard(pile);
   if (top === undefined) return true;
-  if (getRank(top) === Rank.Num7) return getRank(card) <= getRank(top);
-  return getRank(card) >= getRank(top);
+
+
+  return rank >= getRank(top); 
 }
 
 export function playableCards(pile: Readonly<Pile>): Rank[] {
