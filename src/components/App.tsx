@@ -36,7 +36,7 @@ export default function App() {
 
   return (
     <main
-      className="relative grid grid-rows-3 overflow-hidden bg-gradient-to-r from-black via-emerald-800 to-black"
+      className="relative grid grid-rows-3 overflow-hidden bg-red-800"
       style={{ height: windowHeight }}
     >
       <AnimatePresence>

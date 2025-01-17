@@ -43,8 +43,8 @@ export default function Card(props: CardProps) {
         className={clsx(
           "select-none",
           !props.noShadow && "shadow-lg shadow-zinc-500/40 drop-shadow-xl",
-          isFace && "rounded-lg border-white bg-white p-1",
-          props.withSelector && "rounded-t-none rounded-b-lg bg-white"
+          isFace && "rounded-lg border-white bg-red-500 p-1",
+          props.withSelector && "rounded-t-none rounded-b-lg bg-blue-400"
         )}
         src={src}
       />
@@ -58,7 +58,7 @@ function Selector(props: {
 }) {
   return (
     <motion.div
-      className="absolute -top-5 flex h-5 w-full justify-evenly divide-x divide-white rounded-t-lg bg-black md:-top-8 md:h-8"
+      className="absolute -top-5 flex h-5 w-full justify-evenly divide-x divide-white rounded-t-lg bg-blue-400 md:-top-8 md:h-8"
       initial={{ y: 32 }}
       animate={{ y: 0 }}
       exit={{ y: 32 }}

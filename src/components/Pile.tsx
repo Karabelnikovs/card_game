@@ -6,7 +6,7 @@ import Card from "./ui/Card";
 import CardHolder from "./ui/CardHolder";
 import Count from "./ui/Count";
 import { GlobalStateContext } from "./providers/GlobalStateProvider";
-import Fire from "./ui/Fire";
+// import Fire from "./ui/Fire";
 import { BreakpointsContext } from "./providers/BreakpointsProvider";
 
 export default function Pile() {
@@ -92,7 +92,7 @@ function FireAnimation() {
         },
       }}
     >
-      <Fire />
+      {/* <Fire /> */}
     </motion.div>
   );
 }
