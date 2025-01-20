@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import RulesOverlay from "./RulesOverlay";
 
 interface TitleScreenOverlayProps {
   onPlay?: () => void;
@@ -7,6 +8,7 @@ interface TitleScreenOverlayProps {
 
 export default function TitleScreenOverlay(props: TitleScreenOverlayProps) {
   const [logoClicks, setLogoClicks] = useState(0);
+  const [showRules, setShowRules] = useState(false);
 
   return (
     <motion.div
@@ -15,6 +17,8 @@ export default function TitleScreenOverlay(props: TitleScreenOverlayProps) {
       exit={{ opacity: 0 }}
       className="absolute z-[100] flex h-full w-full select-none items-center justify-center bg-gradient-to-b from-black via-black/5 to-black backdrop-blur-md"
     >
+      {showRules && <RulesOverlay onClose={() => setShowRules(false)} />}
+
       <motion.div
         initial={{ x: -window.innerWidth }}
         animate={{ x: 0 }}
@@ -38,15 +42,19 @@ export default function TitleScreenOverlay(props: TitleScreenOverlayProps) {
             Spēlēt
           </motion.button>
           <motion.a
-            href="https://l.yatko.dev/zh-rules"
-            target="_blank"
+
             rel="noopener noreferrer"
             className="text-white underline"
             initial={{ y: 80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", delay: 1.2, damping: 12 }}
           >
-            Noteikumi
+            <button
+              onClick={() => setShowRules(true)}
+              className="absolute bottom-4 right-4 px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-500"
+            >
+              Noteikumi
+            </button>
           </motion.a>
         </div>
       </motion.div>

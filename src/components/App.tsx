@@ -24,7 +24,6 @@ export default function App() {
     isChoosingFaceUpCardsStor
   );
   const isGameOver = useSelector(zhitheadService, isGameOverStor);
-
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   useEffect(() => {
     const onResize = () => setWindowHeight(window.innerHeight);
@@ -44,6 +43,7 @@ export default function App() {
         {!hasStarted && (
           <TitleScreenOverlay onPlay={() => setHasStarted(true)} />
         )}
+
       </AnimatePresence>
 
       <div className="relative">
