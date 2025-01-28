@@ -22,6 +22,7 @@ export default function SortButton() {
       exit={{ y: 100 }}
       whileHover={{ scale: 1.15 }}
       whileTap={{ scale: 0.9 }}
+      
     >
       <SortAsc className="h-4 w-4 -rotate-90 stroke-zinc-200 sm:h-6 sm:w-6" />
     </motion.button>

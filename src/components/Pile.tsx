@@ -6,7 +6,7 @@ import Card from "./ui/Card";
 import CardHolder from "./ui/CardHolder";
 import Count from "./ui/Count";
 import { GlobalStateContext } from "./providers/GlobalStateProvider";
-// import Fire from "./ui/Fire";
+;
 import { BreakpointsContext } from "./providers/BreakpointsProvider";
 
 export default function Pile() {
@@ -103,7 +103,7 @@ function Text() {
       className="absolute flex h-full w-full items-center justify-center"
       exit={{ opacity: 0, transition: { duration: 0.15 } }}
     >
-      <span className="select-none text-xl font-semibold tracking-wide text-zinc-200 md:text-4xl md:font-bold md:tracking-wider">
+      <span className="select-none text-xl font-semibold  text-zinc-200 md:text-4xl md:font-bold ">
         PILE
       </span>
     </motion.div>

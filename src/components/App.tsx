@@ -35,59 +35,75 @@ export default function App() {
 
   return (
     <main
-      className="relative grid grid-rows-3 overflow-hidden bg-red-800"
+      className="relative grid grid-rows-3 overflow-hidden bg-gradient-to-b from-purple-500 via-pink-500 to-red-500 text-white"
       style={{ height: windowHeight }}
     >
       <AnimatePresence>
         {isGameOver && <ResultOverlay />}
         {!hasStarted && (
-          <TitleScreenOverlay onPlay={() => setHasStarted(true)} />
+          <TitleScreenOverlay
+            onPlay={() => setHasStarted(true)}
+            className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          />
         )}
-
       </AnimatePresence>
 
-      <div className="relative">
+      {/* Bot Section */}
+      <div className="relative flex items-center justify-center">
         {(isPlaying || isGameOver) && (
           <>
             <ShownHand player="bot" />
             <AnimatePresence>
               {isPlaying && (
-                <div className="absolute top-2 z-10 mx-auto w-full">
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute top-2 z-10 mx-auto w-full"
+                >
                   <Switcher player="bot" />
-                </div>
+                </motion.div>
               )}
             </AnimatePresence>
           </>
         )}
       </div>
 
-      {isChoosingFaceUpCards && (
-        <motion.div
-          initial={{ opacity: 0.4 }}
-          animate={{ opacity: 1 }}
-          className="m-auto"
-        >
-          <HumanOffHand />
-        </motion.div>
-      )}
-      {!isChoosingFaceUpCards && (
-        <motion.div
-          initial={{ opacity: 0.4 }}
-          animate={{ opacity: 1 }}
-          className="flex h-full items-center justify-center gap-12"
-        >
-          <Deck />
-          <Pile />
-        </motion.div>
-      )}
+      {/* Central Section */}
+      <div className="relative flex items-center justify-center">
+        {isChoosingFaceUpCards ? (
+          <motion.div
+            initial={{ opacity: 0.4 }}
+            animate={{ opacity: 1 }}
+            className="m-auto p-4 bg-white bg-opacity-20 rounded-2xl shadow-lg"
+          >
+            <HumanOffHand />
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0.4 }}
+            animate={{ opacity: 1 }}
+            className="flex h-full items-center justify-center gap-12"
+          >
+            <Deck />
+            <Pile />
+          </motion.div>
+        )}
+      </div>
 
+      {/* Human Section */}
       <div className="relative pt-4">
         <AnimatePresence>
           {isPlaying && (
-            <div className="absolute -left-6 bottom-2 z-10 mx-auto flex w-full items-center justify-center gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="absolute -left-6 bottom-2 z-10 mx-auto flex w-full items-center justify-center gap-4"
+            >
               <SortButton />
               <Switcher player="human" />
-            </div>
+            </motion.div>
           )}
         </AnimatePresence>
         <ShownHand player="human" />
