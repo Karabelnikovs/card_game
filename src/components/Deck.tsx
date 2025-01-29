@@ -33,7 +33,7 @@ function Text(props: { withBg: boolean }) {
           !props.withBg && "text-zinc-600"
         )}
       >
-        DECK
+        Kārtis
       </span>
     </div>
   );

@@ -104,7 +104,7 @@ function Text() {
       exit={{ opacity: 0, transition: { duration: 0.15 } }}
     >
       <span className="select-none text-xl font-semibold  text-zinc-200 md:text-4xl md:font-bold ">
-        PILE
+        Kaudze
       </span>
     </motion.div>
   );
