@@ -11,7 +11,7 @@ import OffHand from "./ui/OffHand";
 
 interface ShownHandProps {
   player: Player;
-}
+} 
 
 export default function ShownHand(props: ShownHandProps) {
   const { zhitheadService } = useContext(GlobalStateContext);

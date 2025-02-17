@@ -28,9 +28,9 @@ export default function Switcher(props: SwitcherProps) {
   const { send } = zhitheadService;
 
   return createElement(UISwitcher, {
-    left: ["Hand", hand.length],
+    left: ["Rokas kārtis", hand.length],
     right: [
-      "Off-Hand",
+      "Rezerves kārtis",
       offHandLen(offHand.faceDown) + offHandLen(offHand.faceUp),
     ],
     state: shownHand === "hand" ? "left" : "right",
