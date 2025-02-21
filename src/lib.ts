@@ -99,21 +99,41 @@ export function playCard(
   card: Readonly<Card>,
   pile: Pile,
   player: Player
-): [Pile, boolean] {
+): [Pile, boolean, boolean] {
   pile.push(card);
 
   const rank = getRank(card);
+  const pileWasBurned = isPileBurnable(pile);
 
-  if (isPileBurnable(pile)) {
-    pile.length = 0; 
-    return [pile, rank === Rank.Num10 || pile.length === 0];
+  if (pileWasBurned) {
+    pile.length = 0;
+    return [pile, true, rank === Rank.Num10];
   }
 
-  if (rank === Rank.Num10) {
-    return [pile, true];
+  return [pile, false, rank === Rank.Num10];
+}
+
+function takeTurn(player: Player, pile: Pile): void {
+  const playable = player.hand.filter((card) => canPlay(card, pile));
+
+  if (playable.length === 0) {
+    console.log("No valid move, drawing a card...");
+    return;
   }
 
-  return [pile, false];
+  const chosenCard = playable[0]; // Replace with actual player choice logic
+  const [newPile, burned, extraTurn] = playCard(chosenCard, pile, player);
+
+  if (burned) {
+    console.log("Pile burned! Resetting...");
+  }
+
+  if (extraTurn) {
+    console.log("Played a 10! Extra turn granted.");
+    takeTurn(player, newPile); // Recursive call for extra turn
+  } else {
+    console.log("Next player's turn...");
+  }
 }
 
 export function getBurnEffect(pile: Readonly<Pile>): "reset" | "burn" | null {
@@ -232,16 +252,21 @@ function topCard(pile: Readonly<Pile>): Card | undefined {
 // }
 export function canPlay(card: Readonly<Card>, pile: Readonly<Pile>): boolean {
   const rank = getRank(card);
+  const top = topCard(pile);
+
+  if (top === undefined) return true;
+
+  const topRank = getRank(top);
+
+  if (topRank === Rank.Num6) {
+    return rank <= topRank;
+  }
 
   if (rank === Rank.Num6 || rank === Rank.Num10) {
     return true;
   }
 
-  const top = topCard(pile);
-  if (top === undefined) return true;
-
-
-  return rank >= getRank(top); 
+  return rank >= topRank;
 }
 
 export function playableCards(pile: Readonly<Pile>): Rank[] {

@@ -16,6 +16,7 @@ import {
   OffHandCards,
   Player as TPlayer,
   totalCards,
+  Rank,
 } from "../../lib";
 import humanMachine from "./human.machine";
 import { PlayerEvents, barePlayerEvent } from "../shared/player-events";
@@ -306,6 +307,12 @@ export const zhitheadMachine = zhitheadModel.createMachine(
             context.pile.push(card);
             if (isHand) hand.splice(hand.indexOf(card), 1);
             else hand[hand.indexOf(card)] = undefined;
+          }
+
+          if (getRank(playedCard) === Rank.Num10) {
+            console.log("10 - Burning pile & extra move");
+
+            return false;
           }
         }
       }),
