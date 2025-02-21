@@ -14,12 +14,12 @@ export default function ResultOverlay() {
 
   const msgs = {
     won: {
-      header: "You Won!",
-      button: "Play again?",
+      header: "Jūs uzverējāt!",
+      button: "Spēlējam vēlreiz?",
     },
     lost: {
-      header: "You lose.",
-      button: "Try again?",
+      header: "Jūs zaudējāt...",
+      button: "Spēlējam vēlreiz?",
     },
   };
 
